@@ -1,2 +1,5 @@
 *.code-workspace
 *.pyc
+oracle*
+trial*
+tuner*
