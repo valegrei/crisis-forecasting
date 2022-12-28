@@ -3,6 +3,9 @@ from pandas import DataFrame, merge
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import contextlib
+from sklearn.metrics import confusion_matrix, roc_curve, precision_recall_curve
+import seaborn as sns
+from tensorflow import convert_to_tensor
 
 def split_df(a: DataFrame, test_prop: float):
     '''
@@ -11,7 +14,7 @@ def split_df(a: DataFrame, test_prop: float):
     Parametros
     ----------
     a : un Dataframe
-        Dataframe al que se dividira. Debe tener doble indice (iso, year)
+        Dataframe al que se dividira.
         
     test_prop : flotante
         Proporcion de la particion de test.
@@ -21,22 +24,10 @@ def split_df(a: DataFrame, test_prop: float):
     splitting : una lista de dataframes de tamano 3 (train, validation, test)
 
     '''
-    iso = a.index.get_level_values('iso').unique().to_numpy()
-    df_train = DataFrame()
-    df_test = DataFrame()
-    for i in iso:
-        df_temp = a.loc[i].copy()
-        df_temp['iso'] = i
-        years = df_temp.index.to_numpy()
-        n = len(years)
-        test_year = years[-1] - n * (test_prop)
-        df_train = df_train.append(df_temp.loc[ : test_year].copy())
-        df_test = df_test.append(df_temp.loc[test_year : ].copy())
-    df_train = df_train.reset_index()
-    df_test = df_test.reset_index()
-    df_train = df_train.set_index(['iso','year'])
-    df_test = df_test.set_index(['iso','year'])
-    return df_train, df_test
+    time = a.index.to_numpy()
+    n = len(time)
+    test_time = time[(int)(- n * (test_prop))]
+    return a.loc[ : test_time].copy(), a.loc[test_time : ].copy()
 
 
 def shift_data(df_x: DataFrame, df_y: DataFrame, n_steps_in: int, n_steps_out: int):
@@ -72,54 +63,15 @@ def shift_data(df_x: DataFrame, df_y: DataFrame, n_steps_in: int, n_steps_out: i
         data_shifted[features + '_t-' +
                      str(n_steps_in-t)] = data_shifted[features].shift(n_steps_in-t)
         x_cols = [*x_cols, *((features + '_t-'+str(n_steps_in-t)).tolist())]
-    # Future features
-    for t in range(1, n_steps_out+1):
-        data_shifted[target_col+'_t+' +
-                     str(t)] = data_shifted[target_col].shift(-t)
-        y_cols = [*y_cols, *((target_col + '_t+'+str(t)).tolist())]
+    # Future feature
+    data_shifted[target_col+'_t+' +
+                    str(n_steps_out)] = data_shifted[target_col].shift(-n_steps_out)
+    y_cols = [*y_cols, *((target_col + '_t+'+str(n_steps_out)).tolist())]
 
     data_shifted = data_shifted.dropna(how='any')
     x = data_shifted[x_cols].values
-    x = x.reshape(len(x), n_steps_in, len(features))  # 3D
-    y = data_shifted[y_cols].values  # 2D
-    return x, y
-
-
-def shift_join_data(df_x: DataFrame, df_y: DataFrame, indexes, n_steps_in: int, n_steps_out: int):
-    '''
-    Genera Caracteristicas pasadas y futuras desplazando por pasos de tiempos
-    a partir de un conjunto de doble indice
-
-    Parametros
-    ----------
-    df_x : DataFrame
-        Dataframe con datos de entrada
-
-    df_y : DataFrame
-        Dataframe con datos de salida
-
-    indexes : array-like
-        Lista de indices a iterar.
-
-    n_steps_in : entero
-        Numero de pasos de tiempo pasados
-
-    n_steps_out : entero
-        Numero de pasos de tiempo futuros
-
-    Retorna
-    -------
-    x, y : arrays
-        Devuelve arrays de datos de entrada X, y datos de salida Y
-
-    '''
-    x, y = shift_data(df_x.loc[indexes[0]], df_y.loc[indexes[0]],
-                      n_steps_in, n_steps_out)
-    for i in range(1, len(indexes)):
-        x_i, y_i = shift_data(
-            df_x.loc[indexes[i]], df_y.loc[indexes[i]], n_steps_in, n_steps_out)
-        x = np.concatenate((x, x_i))
-        y = np.concatenate((y, y_i))
+    x = convert_to_tensor(x.reshape(len(x), n_steps_in, len(features)))  # 3D
+    y = convert_to_tensor(data_shifted[y_cols].values)  # 1D
     return x, y
 
 
@@ -196,3 +148,90 @@ def print_line(line,path):
     f = open(path,'a')
     f.write(str(line))
     f.close()
+
+def graficarTodo(df: DataFrame, t, linea_cero=False):
+    fig, ax = plt.subplots(figsize=[12,8])
+    df.drop(labels=['Class'], axis=1).plot(ax=ax)
+    ax.set_title(t)
+    y1, y2 = ax.get_ylim()
+    resc1 = df['Class'] == 1
+    ax.fill_between(resc1.index, y1=y1, y2=y2, where=resc1, facecolor='grey', alpha=0.4)
+    if linea_cero:
+        ax.axhline(y=0,color='grey',linestyle='--')
+    plt.show()
+
+def graficarClases(clase):
+    neg, pos = np.bincount(clase)
+    fig, ax = plt.subplots(figsize=[8,4])
+    ax.set_title("Clases")
+    ax.bar(['Neg','Pos'],[neg,pos])
+    plt.show()
+
+def plot_metrics(history):
+    metrics = ['loss', 'auc', 'precision', 'recall']
+    plt.subplots(figsize=[12,10])
+    for n, metric in enumerate(metrics):
+        name = metric.replace("_"," ").capitalize()
+        plt.subplot(2,2,n+1)
+        plt.plot(history.epoch, history.history[metric], color='blue', label='Train')
+        plt.plot(history.epoch, history.history['val_'+metric],
+                color='blue', linestyle="--", label='Val')
+        plt.xlabel('Epoch')
+        plt.ylabel(name)
+        if metric == 'loss':
+            plt.ylim([0, plt.ylim()[1]])
+        elif metric == 'auc':
+            plt.ylim([0.8,1])
+        else:
+            plt.ylim([0,1])
+
+        plt.legend();
+
+def plot_cm(labels, predictions, p=0.5):
+    cm = confusion_matrix(labels, predictions > p)
+    plt.figure(figsize=(5,5))
+    sns.heatmap(cm, annot=True, fmt="d")
+    plt.title('Confusion matrix @{:.2f}'.format(p))
+    plt.ylabel('Actual label')
+    plt.xlabel('Predicted label')
+
+    print('Expansiones Detectadas (Verdadero Negativos): ', cm[0][0])
+    print('Expansiones Incorrecas Detectadas (Falso Positivos): ', cm[0][1])
+    print('Recesiones no Detectadas (False Negativos): ', cm[1][0])
+    print('Recesiones Detectadas (Verdadero Positivos): ', cm[1][1])
+    print('Total de Recesiones: ', np.sum(cm[1]))
+
+def plot_roc(train_labels, train_predictions, test_labels, test_predictions):
+    train_fp, train_tp, _ = roc_curve(train_labels, train_predictions)
+    test_fp, test_tp, _ = roc_curve(test_labels, test_predictions)
+    _, ax = plt.subplots(figsize=[8,8])
+    ax.plot(100*train_fp, 100*train_tp, label="Train Baseline", linewidth=2, color='blue')
+    ax.plot(100*test_fp, 100*test_tp, label="Test Baseline", linewidth=2, color='blue', linestyle='--')
+    ax.set_xlabel('False positives [%]')
+    ax.set_ylabel('True positives [%]')
+    ax.set_xlim([-0.5,20])
+    ax.set_ylim([80,100.5])
+    ax.legend(loc='lower right')
+    ax.grid(True)
+
+def plot_prc(train_labels, train_predictions, test_labels, test_predictions):
+    train_precision, train_recall, _ = precision_recall_curve(train_labels, train_predictions)
+    test_precision, test_recall, _ = precision_recall_curve(test_labels, test_predictions)
+
+    _, ax = plt.subplots(figsize=[8,8])
+    ax.plot(train_precision, train_recall, label="Train Baseline", linewidth=2, color='blue')
+    ax.plot(test_precision, test_recall, label="Test Baseline", linewidth=2, color='blue', linestyle='--')
+    ax.set_xlabel('Recall')
+    ax.set_ylabel('Precision')
+    ax.legend(loc='lower right')
+    ax.grid(True)
+
+def plot_probs(test_labels, test_predictions, tipo):
+    _, ax = plt.subplots(figsize=[8,4])
+    ax.plot(test_labels, label=f"{tipo} original", color='orange')
+    ax.plot(test_predictions, label=f"{tipo} prediction", color='green')
+    ax.set_xlabel('time steps')
+    ax.set_ylabel('Probabilidad de Recesión')
+    ax.legend()
+    ax.grid(True)
+    ax.legend(loc='lower right')
