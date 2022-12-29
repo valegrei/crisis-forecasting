@@ -1,0 +1,19 @@
+Results summary
+Results in ./LSTM_USA_6_20221229_1313
+Showing 1 best trials
+<keras_tuner.engine.objective.Objective object at 0x7f5f7afc85b0>
+Trial summary
+Hyperparameters:
+steps_in: 4
+lstm_cells: 144
+lstm_dropout: 0.2
+dense_layers: 3
+dense_nodes: 192
+dense_dropout: 0.4
+learning_rate: 0.001
+dense_activation: tanh
+tuner/epochs: 2
+tuner/initial_epoch: 0
+tuner/bracket: 3
+tuner/round: 0
+Score: 1.0
