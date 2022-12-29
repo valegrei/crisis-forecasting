@@ -1,0 +1,16 @@
+Results summary
+Results in G:\MLP_USA_6_20221228_0404
+Showing 1 best trials
+Objective(name='val_auc', direction='max')
+Trial summary
+Hyperparameters:
+steps_in: 12
+layers: 2
+nodes: 336
+dropout: 0.5
+learning_rate: 0.001
+tuner/epochs: 2
+tuner/initial_epoch: 0
+tuner/bracket: 3
+tuner/round: 0
+Score: 1.0

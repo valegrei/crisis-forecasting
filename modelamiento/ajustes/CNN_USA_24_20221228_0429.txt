@@ -1,0 +1,24 @@
+Results summary
+Results in G:\CNN_USA_24_20221228_0429
+Showing 1 best trials
+Objective(name='val_auc', direction='max')
+Trial summary
+Hyperparameters:
+steps_in: 12
+conv1_kernels: 96
+conv1_kernel_size: 4
+conv1_dropout: 0.4
+conv2_kernels: 256
+conv2_kernel_size: 4
+conv2_dropout: 0.1
+dense_nodes: 32
+dense_layers: 1
+dense_dropout: 0.30000000000000004
+learning_rate: 0.001
+conv_activation: relu
+dense_activation: tanh
+tuner/epochs: 10
+tuner/initial_epoch: 0
+tuner/bracket: 1
+tuner/round: 0
+Score: 1.0
