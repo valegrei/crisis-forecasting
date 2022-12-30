@@ -1,0 +1,38 @@
+Results summary
+Results in ./LSTM_PERU_12_20221230_0155
+Showing 1 best trials
+<keras_tuner.engine.objective.Objective object at 0x7fb5cdb95040>
+Trial summary
+Hyperparameters:
+steps_in: 4
+lstm_cells: 304
+lstm_dropout: 0.30000000000000004
+dense_layers: 3
+dense_nodes: 272
+dense_dropout: 0.2
+learning_rate: 1e-05
+dense_activation: relu
+tuner/epochs: 10
+tuner/initial_epoch: 0
+tuner/bracket: 1
+tuner/round: 0
+Score: 0.7260681986808777
+Results summary
+Results in ./LSTM_PERU_12_20221230_0155
+Showing 1 best trials
+<keras_tuner.engine.objective.Objective object at 0x7fb5cdb95040>
+Trial summary
+Hyperparameters:
+steps_in: 4
+lstm_cells: 144
+lstm_dropout: 0.1
+dense_layers: 2
+dense_nodes: 224
+dense_dropout: 0.5
+learning_rate: 0.0001
+dense_activation: relu
+tuner/epochs: 30
+tuner/initial_epoch: 0
+tuner/bracket: 0
+tuner/round: 0
+Score: 0.7895684242248535

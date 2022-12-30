@@ -1,0 +1,25 @@
+Results summary
+Results in ./CNN_USA_1_20221230_0037
+Showing 1 best trials
+<keras_tuner.engine.objective.Objective object at 0x7f42a3ec7b80>
+Trial summary
+Hyperparameters:
+steps_in: 17
+conv1_kernels: 336
+conv1_kernel_size: 3
+conv1_dropout: 0.30000000000000004
+conv2_kernels: 304
+conv2_kernel_size: 4
+conv2_dropout: 0.4
+dense_nodes: 352
+dense_layers: 4
+dense_dropout: 0.2
+learning_rate: 0.001
+conv_activation: tanh
+dense_activation: tanh
+tuner/epochs: 30
+tuner/initial_epoch: 10
+tuner/bracket: 2
+tuner/round: 2
+tuner/trial_id: 0067
+Score: 1.0000001192092896
