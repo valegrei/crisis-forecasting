@@ -1,0 +1,20 @@
+Results summary
+Results in ./GRU_PERU_6_20221230_2312
+Showing 1 best trials
+<keras_tuner.engine.objective.Objective object at 0x7f5a72fb81f0>
+Trial summary
+Hyperparameters:
+steps_in: 8
+gru_cells: 272
+gru_dropout: 0.2
+dense_layers: 2
+dense_nodes: 48
+dense_dropout: 0.5
+learning_rate: 0.001
+dense_activation: tanh
+tuner/epochs: 30
+tuner/initial_epoch: 10
+tuner/bracket: 1
+tuner/round: 1
+tuner/trial_id: 0079
+Score: 1.0
