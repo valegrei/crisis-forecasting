@@ -1,0 +1,17 @@
+Results summary
+Results in ./MLP_PERU_1_20221231_0044
+Showing 1 best trials
+<keras_tuner.engine.objective.Objective object at 0x7f9abc1e4c70>
+Trial summary
+Hyperparameters:
+steps_in: 15
+layers: 5
+nodes: 160
+dropout: 0.30000000000000004
+learning_rate: 0.001
+tuner/epochs: 10
+tuner/initial_epoch: 4
+tuner/bracket: 3
+tuner/round: 2
+tuner/trial_id: 0037
+Score: 1.0000001192092896
