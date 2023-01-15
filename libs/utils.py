@@ -72,7 +72,7 @@ def shift_data(df_x: DataFrame, df_y: DataFrame, n_steps_in: int, n_steps_out: i
     x = data_shifted[x_cols].values
     x = convert_to_tensor(x.reshape(len(x), n_steps_in, len(features)))  # 3D
     y = convert_to_tensor(data_shifted[y_cols].values)  # 1D
-    return x, y
+    return x, y, data_shifted.index.to_list()
 
 
 def mae(orig, pred):
@@ -150,7 +150,7 @@ def print_line(line,path):
     f.close()
 
 def graficarTodo(df: DataFrame, t, linea_cero=False):
-    fig, ax = plt.subplots(figsize=[12,8])
+    fig, ax = plt.subplots(figsize=[12,6])
     df.drop(labels=['Class'], axis=1).plot(ax=ax)
     ax.set_title(t)
     y1, y2 = ax.get_ylim()
