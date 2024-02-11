@@ -1,0 +1,17 @@
+Results summary
+Results in .\MLP_USA_1_20240211_1447
+Showing 1 best trials
+Objective(name="val_prc", direction="max")
+
+Trial 0028 summary
+Hyperparameters:
+steps_in: 24
+layers: 4
+nodes: 160
+dropout: 0.30000000000000004
+learning_rate: 0.01
+tuner/epochs: 2
+tuner/initial_epoch: 0
+tuner/bracket: 3
+tuner/round: 0
+Score: 1.0
