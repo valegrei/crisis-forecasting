@@ -1,0 +1,21 @@
+Results summary
+Results in .\GRU_USA_12_20240211_2020
+Showing 1 best trials
+Objective(name="val_precision", direction="max")
+
+Trial 0034 summary
+Hyperparameters:
+steps_in: 8
+gru_cells: 64
+gru_dropout: 0.1
+dense_layers: 4
+dense_nodes: 192
+dense_dropout: 0.30000000000000004
+learning_rate: 0.001
+dense_activation: tanh
+tuner/epochs: 4
+tuner/initial_epoch: 2
+tuner/bracket: 3
+tuner/round: 1
+tuner/trial_id: 0012
+Score: 0.380952388048172
