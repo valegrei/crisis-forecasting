@@ -1,0 +1,21 @@
+Results summary
+Results in .\GRU_PERU_1_20240211_2052
+Showing 1 best trials
+Objective(name="val_prc", direction="max")
+
+Trial 0037 summary
+Hyperparameters:
+steps_in: 4
+gru_cells: 128
+gru_dropout: 0.2
+dense_layers: 4
+dense_nodes: 112
+dense_dropout: 0.1
+learning_rate: 0.001
+dense_activation: tanh
+tuner/epochs: 4
+tuner/initial_epoch: 2
+tuner/bracket: 3
+tuner/round: 1
+tuner/trial_id: 0012
+Score: 1.0000001192092896

@@ -1,0 +1,20 @@
+Results summary
+Results in .\LSTM_USA_12_20240222_1417
+Showing 1 best trials
+Objective(name="val_prc", direction="max")
+
+Trial 0077 summary
+Hyperparameters:
+steps_in: 9
+lstm_cells: 80
+lstm_dropout: 0.30000000000000004
+dense_layers: 4
+dense_nodes: 48
+dense_dropout: 0.5
+learning_rate: 0.001
+dense_activation: relu
+tuner/epochs: 10
+tuner/initial_epoch: 0
+tuner/bracket: 1
+tuner/round: 0
+Score: 0.6489922404289246

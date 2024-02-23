@@ -1,0 +1,21 @@
+Results summary
+Results in .\LSTM_PERU_12_20240222_2043
+Showing 1 best trials
+Objective(name="val_prc", direction="max")
+
+Trial 0082 summary
+Hyperparameters:
+steps_in: 6
+lstm_cells: 272
+lstm_dropout: 0.30000000000000004
+dense_layers: 2
+dense_nodes: 112
+dense_dropout: 0.1
+learning_rate: 1e-05
+dense_activation: relu
+tuner/epochs: 30
+tuner/initial_epoch: 10
+tuner/bracket: 1
+tuner/round: 1
+tuner/trial_id: 0075
+Score: 0.6242069602012634

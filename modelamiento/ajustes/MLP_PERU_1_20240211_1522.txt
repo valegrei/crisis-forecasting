@@ -1,0 +1,17 @@
+Results summary
+Results in .\MLP_PERU_1_20240211_1522
+Showing 1 best trials
+Objective(name="val_prc", direction="max")
+
+Trial 0079 summary
+Hyperparameters:
+steps_in: 24
+layers: 2
+nodes: 256
+dropout: 0.1
+learning_rate: 0.0001
+tuner/epochs: 10
+tuner/initial_epoch: 0
+tuner/bracket: 1
+tuner/round: 0
+Score: 1.0000001192092896

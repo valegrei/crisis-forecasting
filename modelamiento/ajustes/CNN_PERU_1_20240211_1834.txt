@@ -1,0 +1,25 @@
+Results summary
+Results in .\CNN_PERU_1_20240211_1834
+Showing 1 best trials
+Objective(name="val_prc", direction="max")
+
+Trial 0085 summary
+Hyperparameters:
+steps_in: 4
+conv1_kernels: 208
+conv1_kernel_size: 2
+conv1_dropout: 0.2
+conv2_kernels: 256
+conv2_kernel_size: 4
+conv2_dropout: 0.30000000000000004
+dense_nodes: 192
+dense_layers: 5
+dense_dropout: 0.2
+learning_rate: 0.0001
+conv_activation: relu
+dense_activation: tanh
+tuner/epochs: 30
+tuner/initial_epoch: 0
+tuner/bracket: 0
+tuner/round: 0
+Score: 1.0000001192092896

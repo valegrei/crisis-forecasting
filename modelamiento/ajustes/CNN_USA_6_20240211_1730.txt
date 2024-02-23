@@ -1,0 +1,26 @@
+Results summary
+Results in .\CNN_USA_6_20240211_1730
+Showing 1 best trials
+Objective(name="val_prc", direction="max")
+
+Trial 0050 summary
+Hyperparameters:
+steps_in: 14
+conv1_kernels: 336
+conv1_kernel_size: 2
+conv1_dropout: 0.30000000000000004
+conv2_kernels: 192
+conv2_kernel_size: 5
+conv2_dropout: 0.4
+dense_nodes: 208
+dense_layers: 3
+dense_dropout: 0.4
+learning_rate: 0.001
+conv_activation: tanh
+dense_activation: tanh
+tuner/epochs: 30
+tuner/initial_epoch: 10
+tuner/bracket: 3
+tuner/round: 3
+tuner/trial_id: 0047
+Score: 1.0
